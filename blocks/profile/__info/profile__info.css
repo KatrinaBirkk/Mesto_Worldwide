@@ -1,4 +1,7 @@
 .profile__info {
   color: white;
   margin: 0;
+  display: grid;
+  grid-template-columns: fit-content(100%) 1fr;
+  align-items: flex-end;
 }

@@ -1,0 +1,11 @@
+.form__field {
+  border: 0;
+  width: 358px;
+  height: 27px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #bcbcc4;
+  background-color: transparent;
+  margin: 30px 36px;
+  font-size: 14px;
+  font-family: inherit;
+}

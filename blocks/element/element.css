@@ -5,3 +5,10 @@
   background-color: white;
   overflow: hidden;
 }
+
+@media screen and (max-width: 882px) {
+  .element {
+    max-width: 100%;
+    min-width: 282px;
+  }
+}

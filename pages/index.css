@@ -19,6 +19,8 @@
 @import url(../blocks/profile/profile.css);
 
 @import url(../blocks/button/_add/button_add.css);
+@import url(../blocks/button/_edit/button_edit.css);
+@import url(../blocks/button/_submit/button_submit.css);
 
 @import url(../blocks/element/__icon/element__icon.css);
 @import url(../blocks/element/__image/element__image.css);
@@ -27,3 +29,9 @@
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/__bottom/element__bottom.css);
+
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+@import url(../blocks/footer/footer.css);
+
+@import url(../blocks/form/form.css);
+@import url(../blocks/form/__field/form__field.css);

@@ -1,0 +1,9 @@
+.form {
+  display: none;
+  position: absolute;
+  top: 400px;
+  left: 400px;
+  width: 430px;
+  height: 330px;
+  background-color: white;
+}
