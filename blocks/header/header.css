@@ -7,8 +7,9 @@
   border-bottom: 1px solid #545454;
 }
 
-@media screen and (max-width: 882px) {
+@media screen and (max-width: 592px) {
   .header {
-    width: 96%;
+    margin: 28px auto 42px;
+    height: 56px;
   }
 }

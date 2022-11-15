@@ -1,9 +1,15 @@
 .form {
-  display: none;
-  position: absolute;
-  top: 400px;
-  left: 400px;
-  width: 430px;
-  height: 330px;
-  background-color: white;
+  width: 358px;
+  margin-top: 34px;
+  margin-left: 32px;
+  margin-bottom: 37px;
+}
+
+@media screen and (max-width: 545px) {
+  .form {
+    width: 238px;
+    margin-left: 22px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
 }

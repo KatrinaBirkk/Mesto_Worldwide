@@ -3,3 +3,16 @@
   margin: 66px auto 60px;
   max-width: 880px;
 }
+
+@media screen and (max-width: 882px) {
+  .footer {
+    width: 96%;
+  }
+}
+
+@media screen and (max-width: 592px) {
+  .footer {
+    width: 87.5%;
+    margin: 48px auto 36px;
+  }
+}

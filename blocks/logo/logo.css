@@ -1,5 +1,15 @@
 .logo {
-  background-image: url(../../images/logo_white.svg);
-  width: 142px;
-  height: 33px;
+  margin: 0;
+}
+
+@media screen and (max-width: 882px) {
+  .logo {
+    margin-left: 2%;
+  }
+}
+
+@media screen and (max-width: 592px) {
+  .logo {
+    margin-left: 6%;
+  }
 }

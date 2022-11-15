@@ -5,3 +5,12 @@
   grid-template-columns: fit-content(100%) 1fr;
   align-items: flex-end;
 }
+
+@media screen and (max-width: 592px) {
+  .profile__info {
+    max-width: 100%;
+    grid-template-columns: fit-content(100%) fit-content(40%);
+    align-items: center;
+    text-align: center;
+  }
+}

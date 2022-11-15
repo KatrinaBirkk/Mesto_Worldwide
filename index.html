@@ -15,69 +15,114 @@
         <section class="profile">
           <div class="avatar"></div>
           <div class="profile__info">
-            <h2 class="profile__title">Жак-Ив Кусто</h2>
-            <button class="button_edit">
-              <img src="./images/Edit.svg" />
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <button class="button button_edit">
+              <img
+                class="icon icon_edit"
+                src="./images/EditButton.svg"
+                alt="кнопка редактировать"
+              />
             </button>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
-          <button class="button_add"><img src="./images/Plus.svg" /></button>
+          <button class="button button_add">
+            <img src="./images/Plus.svg" alt="кнопка Добавить" />
+          </button>
         </section>
         <section class="elements">
           <div class="element">
-            <img class="element__image" src="./images/Florence.jpg" />
+            <img
+              class="element__image"
+              src="./images/Florence.jpg"
+              alt="фото Флоренции"
+            />
             <div class="element__bottom">
               <h2 class="element__title">Флоренция</h2>
               <div class="element__icon"></div>
             </div>
           </div>
           <div class="element">
-            <img class="element__image" src="./images/Dombai.png" />
+            <img
+              class="element__image"
+              src="./images/Dombai.png"
+              alt="фото Домбай"
+            />
             <div class="element__bottom">
               <h2 class="element__title">Домбай</h2>
               <div class="element__icon"></div>
             </div>
           </div>
           <div class="element">
-            <img class="element__image" src="./images/Istanbul.jpg" />
+            <img
+              class="element__image"
+              src="./images/Istanbul.jpg"
+              alt="фото Стамбула"
+            />
             <div class="element__bottom">
               <h2 class="element__title">Стамбул</h2>
               <div class="element__icon"></div>
             </div>
           </div>
           <div class="element">
-            <img class="element__image" src="./images/Karachaevo.png" />
+            <img
+              class="element__image"
+              src="./images/Karachaevo.png"
+              alt="фото Карачаево-Черкессии"
+            />
             <div class="element__bottom">
-              <h2 class="element__title">Карачаево</h2>
+              <h2 class="element__title">Карачаево-Черкессия</h2>
               <div class="element__icon"></div>
             </div>
           </div>
           <div class="element">
-            <img class="element__image" src="./images/Venice.jpg" />
+            <img
+              class="element__image"
+              src="./images/Venice.jpg"
+              alt="фото Венеции"
+            />
             <div class="element__bottom">
               <h2 class="element__title">Венеция</h2>
               <div class="element__icon"></div>
             </div>
           </div>
           <div class="element">
-            <img class="element__image" src="./images/Dombai.png" />
+            <img
+              class="element__image"
+              src="./images/Dombai.png"
+              alt="фото Домбай"
+            />
             <div class="element__bottom">
               <h2 class="element__title">Домбай</h2>
               <div class="element__icon"></div>
             </div>
           </div>
         </section>
-        <div class="form">
-          <form>
-            <h2>Редактировать профиль</h2>
-            <input class="form__field" type="text" />
-            <input class="form__field" type="text" />
-            <button type="submit" class="button_submit">Отправить</button>
-          </form>
-        </div>
+        <section class="popup popup_opened">
+          <div class="popup__container">
+            <form class="form">
+              <h2 class="popup__title">Редактировать профиль</h2>
+              <input
+                class="form__field"
+                type="text"
+                placeholder="Имя пользователя"
+              />
+              <input class="form__field" type="text" placeholder="О себе" />
+              <button type="submit" class="button button_submit">
+                Сохранить
+              </button>
+            </form>
+          </div>
+          <button class="button button_close">
+            <img
+              class="icon icon_close"
+              src="./images/CloseIcon.svg"
+              alt="крестик или икс"
+            />
+          </button>
+        </section>
       </main>
       <footer class="footer">
-        <h2 class="footer__copyright">&copy; 2020 Mesto Russia</h2>
+        <h3 class="footer__copyright">&copy; 2020 Mesto Russia</h3>
       </footer>
     </div>
   </body>

@@ -11,3 +11,14 @@
     width: 96%;
   }
 }
+
+@media screen and (max-width: 592px) {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    width: 87.5%;
+    margin: 42px auto 36px;
+  }
+}
