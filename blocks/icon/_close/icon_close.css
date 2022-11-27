@@ -1,4 +1,11 @@
 .icon_close {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+@media screen and (max-width: 545px) {
+  .icon_close {
+    width: 20px;
+    height: 20px;
+  }
 }

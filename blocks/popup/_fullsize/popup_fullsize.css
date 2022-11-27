@@ -8,3 +8,10 @@
   background-color: transparent;
   z-index: 3;
 }
+
+@media screen and (max-width: 545px) {
+  .popup_fullsize {
+    height: 299px;
+    margin: 0;
+  }
+}
