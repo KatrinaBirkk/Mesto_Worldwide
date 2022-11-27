@@ -1,0 +1,10 @@
+.popup_fullsize {
+  position: relative;
+  margin-top: 90px;
+  margin-bottom: 90px;
+  height: 540px;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: transparent;
+  z-index: 3;
+}
