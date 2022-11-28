@@ -9,113 +9,102 @@
   <body class="root">
     <div class="page">
       <header class="header">
-        <div class="logo logo_white"></div>
+        <div class="logo logo_color_white"></div>
       </header>
       <main>
         <section class="profile">
-          <div class="avatar"></div>
+          <div class="profile__avatar"></div>
           <div class="profile__info">
             <h1 class="profile__title"></h1>
-            <button class="button button_edit">
-              <img
-                class="icon icon_edit"
-                src="./images/EditButton.svg"
-                alt="кнопка редактировать"
-              />
-            </button>
+            <button class="profile__button profile__button_type_edit"></button>
             <p class="profile__subtitle"></p>
           </div>
-          <button class="button button_add">
-            <img src="./images/Plus.svg" alt="кнопка Добавить" />
-          </button>
+          <button
+            class="profile__button profile__button_type_add"
+            type="button"
+          ></button>
         </section>
         <section class="elements"></section>
-        <section class="popup popup_type_editprofile">
-          <div class="popup__container">
-            <form class="form">
-              <h2 class="popup__title">Редактировать профиль</h2>
-              <input
-                class="form__field field_author"
-                type="text"
-                placeholder="Имя пользователя"
-              />
-              <input
-                class="form__field field_about"
-                type="text"
-                placeholder="О себе"
-              />
-              <button type="submit" class="button button_submit">
-                Сохранить
-              </button>
-            </form>
-          </div>
-          <button class="button button_close" id="close_editform">
-            <img
-              class="icon icon_close"
-              src="./images/CloseIcon.svg"
-              alt="крестик или икс"
-            />
-          </button>
-        </section>
-        <section class="popup popup_type_addcard">
-          <div class="popup__container">
-            <form class="form form_newplace">
-              <h2 class="popup__title">Новое место</h2>
-              <input
-                class="form__field field_place"
-                type="text"
-                placeholder="Название"
-              />
-              <input
-                class="form__field field_link"
-                type="text"
-                placeholder="Ссылка на картинку"
-              />
-              <button type="submit" class="button button_submit">
-                Создать
-              </button>
-            </form>
-          </div>
-          <button class="button button_close" id="close_addform">
-            <img
-              class="icon icon_close"
-              src="./images/CloseIcon.svg"
-              alt="крестик или икс"
-            />
-          </button>
-        </section>
-
-        <section class="popup popup_darkfon" id="fullpicture">
-          <div class="popup_fullsize">
-            <img class="popup__image" src="" />
-            <h3 class="popup__label"></h3>
-          </div>
-          <button
-            class="button button_close button_closepicture"
-            id="close_fullpicture"
-          >
-            <img
-              class="icon icon_close"
-              src="./images/CloseIcon.svg"
-              alt="крестик или икс"
-            />
-          </button>
-        </section>
       </main>
       <footer class="footer">
-        <h3 class="footer__copyright">&copy; 2020 Mesto Russia</h3>
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
     </div>
 
+    <section class="popup popup_type_editprofile">
+      <div class="popup__container popup__container_form">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="form">
+          <input
+            class="form__field form__field_type_author"
+            name="author"
+            type="text"
+            placeholder="Имя пользователя"
+          />
+          <input
+            class="form__field form__field_type_occupation"
+            name="occupation"
+            type="text"
+            placeholder="О себе"
+          />
+          <button type="submit" class="popup__button popup__button_type_submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
+      <button
+        class="popup__button popup__button_type_close"
+        id="close_editform"
+        type="button"
+      ></button>
+    </section>
+    <section class="popup popup_type_addcard">
+      <div class="popup__container popup__container_form">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="form form_newplace">
+          <input
+            class="form__field form__field_type_place"
+            name="place"
+            type="text"
+            placeholder="Название"
+          />
+          <input
+            class="form__field form__field_type_link"
+            name="link"
+            type="text"
+            placeholder="Ссылка на картинку"
+          />
+          <button type="submit" class="popup__button popup__button_type_submit">
+            Создать
+          </button>
+        </form>
+      </div>
+      <button
+        class="popup__button popup__button_type_close"
+        type="button"
+        id="close_addform"
+      ></button>
+    </section>
+
+    <section class="popup popup_overlaycolor_dark" id="fullpicture">
+      <div class="popup__container popup__container_img">
+        <img class="popup__image" src="#" alt="#" />
+        <h3 class="popup__label"></h3>
+      </div>
+      <button
+        class="popup__button popup__button_type_close popup__button_type_closepicture"
+        type="button"
+        id="close_fullpicture"
+      ></button>
+    </section>
+
     <template id="cards">
       <div class="element">
-        <button class="button button_delete">
-          <img class="icon icon_trash" src="./images/Trash.svg" alt="удалить" />
-        </button>
+        <button class="element__button_type_delete" type="button"></button>
         <img class="element__image" src="" alt="фото Флоренции" />
         <div class="element__bottom">
           <h2 class="element__title"></h2>
-          <div class="element__icon"></div>
+          <button class="element__button_type_like"></button>
         </div>
       </div>
     </template>

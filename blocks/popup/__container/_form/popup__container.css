@@ -1,0 +1,14 @@
+.popup__container_form {
+  /* display: none; */
+  position: relative;
+  width: 430px;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 3;
+}
+
+@media screen and (max-width: 545px) {
+  .popup__container_form {
+    width: 282px;
+  }
+}

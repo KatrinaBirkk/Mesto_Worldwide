@@ -1,0 +1,21 @@
+.profile__button_type_edit {
+  background-image: url(../../../../../images/Edit.svg);
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid white;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 592px) {
+  .profile__button_type_edit {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+}

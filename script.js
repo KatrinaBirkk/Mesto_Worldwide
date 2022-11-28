@@ -1,16 +1,16 @@
 const profile = document.querySelector(".profile__info");
-const editButton = document.querySelector(".button_edit");
+const editButton = document.querySelector(".profile__button_type_edit");
 const container = document.querySelector(".popup");
 const closeButton = document.querySelector("#close_editform");
 const popupEditProfile = document.querySelector(".popup_type_editprofile");
 const popupNewPlace = document.querySelector(".popup_type_addcard");
 const authorProfile = document.querySelector(".profile__title");
 const aboutProfile = document.querySelector(".profile__subtitle");
-const addButton = document.querySelector(".button_add");
-const saveButton = document.querySelector(".button_submit");
+const addButton = document.querySelector(".profile__button_type_add");
+const saveButton = document.querySelector(".popup__button_type_submit");
 const closeButtonAddForm = document.querySelector("#close_addform");
 
-const deleteButton = document.querySelector(".button_delete");
+const deleteButton = document.querySelector(".element__button_type_delete");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -42,8 +42,8 @@ saveButton.addEventListener("click", function () {
 
 formElement = document.querySelector(".form"); // Воспользуйтесь методом querySelector()
 // Находим поля формы в DOMconst
-nameInput = container.querySelector(".field_author"); // Воспользуйтесь инструментом .querySelector()const
-jobInput = container.querySelector(".field_about"); // Воспользуйтесь инструментом .querySelector()
+nameInput = container.querySelector(".form__field_type_author"); // Воспользуйтесь инструментом .querySelector()const
+jobInput = container.querySelector(".form__field_type_occupation"); // Воспользуйтесь инструментом .querySelector()
 
 // Обработчик «отправки» формы, хотя пока// она никуда отправляться не будет
 function formSubmitHandler(evt) {
@@ -102,13 +102,13 @@ function createCard({ name, link }) {
   cardElement.querySelector(".element__image").src = link;
 
   cardElement
-    .querySelector(".element__icon")
+    .querySelector(".element__button_type_like")
     .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("element__icon_active");
+      evt.target.classList.toggle("element__button_type_liked");
     });
 
   cardElement
-    .querySelector(".button_delete")
+    .querySelector(".element__button_type_delete")
     .addEventListener("click", function () {
       cardElement.remove();
     });
@@ -129,8 +129,8 @@ function createCard({ name, link }) {
 create();
 
 const formNewPlace = document.querySelector(".form_newplace");
-const placeInput = document.querySelector(".field_place");
-const linkInput = document.querySelector(".field_link");
+const placeInput = document.querySelector(".form__field_type_place");
+const linkInput = document.querySelector(".form__field_type_link");
 
 function formAddPlace(evt) {
   evt.preventDefault();

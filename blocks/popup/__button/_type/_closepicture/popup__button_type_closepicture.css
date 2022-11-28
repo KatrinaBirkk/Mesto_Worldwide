@@ -1,0 +1,13 @@
+.popup__button_type_closepicture {
+  margin-bottom: 585px;
+}
+
+@media screen and (max-width: 545px) {
+  .popup__button_type_closepicture {
+    margin-bottom: 4px;
+    margin-left: 224px;
+    margin-top: 87px;
+    width: 20px;
+    height: 20px;
+  }
+}
