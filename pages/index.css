@@ -55,3 +55,4 @@
 @import url(../blocks/element/__button/_type/_like/element__button_type_liked.css);
 @import url(../blocks/form/__field/_type/form__field_type_error.css);
 @import url(../blocks/popup/__button/_inactive/button_inactive.css);
+@import url(../blocks/form/__field/form__field-error.css);

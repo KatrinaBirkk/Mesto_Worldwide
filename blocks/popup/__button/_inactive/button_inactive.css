@@ -1,7 +1,17 @@
 .button_inactive {
   opacity: 0.2;
-  border: 2px;
-  border-color: black;
   background-color: white;
   color: black;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  border-radius: 2px;
+}
+
+.button_inactive:hover {
+  opacity: 0.2;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  border-radius: 2px;
 }
