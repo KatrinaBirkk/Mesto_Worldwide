@@ -9,8 +9,13 @@ const aboutProfile = document.querySelector(".profile__subtitle");
 const addButton = document.querySelector(".profile__button_type_add");
 const saveButton = document.querySelector(".popup__button_type_submit");
 const closeButtonAddForm = document.querySelector("#close_addform");
-
+const popupImage = document.querySelector(".popup__image");
+const popupLabel = document.querySelector(".popup__label");
 const deleteButton = document.querySelector(".element__button_type_delete");
+const formPlace = document.querySelector(".form_newplace"); //почему здесь не работает обращение по имени формы?
+const formProfile = document.forms.profileForm;
+const nameInput = container.querySelector(".form__field_type_author");
+const jobInput = container.querySelector(".form__field_type_occupation");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -22,6 +27,8 @@ function closePopup(popup) {
 
 editButton.addEventListener("click", function () {
   openPopup(popupEditProfile);
+  nameInput.textContent = authorProfile.value;
+  jobInput.textContent = aboutProfile.value;
 });
 
 closeButton.addEventListener("click", function () {
@@ -36,17 +43,8 @@ closeButtonAddForm.addEventListener("click", function () {
   closePopup(popupNewPlace);
 });
 
-saveButton.addEventListener("click", function () {
-  closePopup(popupEditProfile);
-});
-
-formElement = document.querySelector(".form"); // Воспользуйтесь методом querySelector()
-// Находим поля формы в DOMconst
-nameInput = container.querySelector(".form__field_type_author"); // Воспользуйтесь инструментом .querySelector()const
-jobInput = container.querySelector(".form__field_type_occupation"); // Воспользуйтесь инструментом .querySelector()
-
 // Обработчик «отправки» формы, хотя пока// она никуда отправляться не будет
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   // Эта строчка отменяет стандартную отправку формы.
   // Так мы можем определить свою логику отправки.
@@ -56,11 +54,12 @@ function formSubmitHandler(evt) {
   // Вставьте новые значения с помощью textContent
   authorProfile.textContent = nameInput.value;
   aboutProfile.textContent = jobInput.value;
+  closePopup(popupEditProfile);
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener("submit", formSubmitHandler);
+formProfile.addEventListener("submit", handleProfileFormSubmit);
 
 const initialCards = [
   {
@@ -100,6 +99,7 @@ function createCard({ name, link }) {
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   cardElement.querySelector(".element__title").textContent = name;
   cardElement.querySelector(".element__image").src = link;
+  cardElement.querySelector(".element__image").alt = name;
 
   cardElement
     .querySelector(".element__button_type_like")
@@ -117,10 +117,9 @@ function createCard({ name, link }) {
     .querySelector(".element__image")
     .addEventListener("click", function () {
       openPopup(pictureFullSize);
-      const popupImage = document.querySelector(".popup__image");
-      const popupLabel = document.querySelector(".popup__label");
       popupImage.src = link;
       popupLabel.textContent = name;
+      document.querySelector(".popup__image").alt = name;
     });
 
   cardsBlock.prepend(cardElement);
@@ -132,7 +131,7 @@ const formNewPlace = document.querySelector(".form_newplace");
 const placeInput = document.querySelector(".form__field_type_place");
 const linkInput = document.querySelector(".form__field_type_link");
 
-function formAddPlace(evt) {
+function handleAddFormSubmit(evt) {
   evt.preventDefault();
   createCard({ name: placeInput.value, link: linkInput.value });
   placeInput.value = "";
@@ -140,7 +139,7 @@ function formAddPlace(evt) {
   closePopup(popupNewPlace);
 }
 
-formNewPlace.addEventListener("submit", formAddPlace);
+formNewPlace.addEventListener("submit", handleAddFormSubmit);
 
 const pictureFullSize = document.querySelector("#fullpicture");
 
@@ -149,3 +148,72 @@ document
   .addEventListener("click", function () {
     closePopup(pictureFullSize);
   });
+
+//Блок с валидацией формы
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("form__field_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("form__field-error_active");
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("form__field_type_error");
+  errorElement.classList.remove("form__field-error_active");
+  errorElement.textContent = "";
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+//переключение состояния кнопки
+const toggleButtonState = (inputList, buttonElement) => {
+  console.log(hasInvalidInput(inputList));
+  if (hasInvalidInput(inputList)) {
+    buttonElement.setAttribute("disabled", true);
+    buttonElement.classList.add("button_inactive");
+  } else {
+    buttonElement.removeAttribute("disabled");
+    buttonElement.classList.remove("button_inactive");
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(".form__field"));
+  const buttonElement = formElement.querySelector(".popup__button_type_submit");
+
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll(".form"));
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+    });
+
+    setEventListeners(formElement);
+  });
+};
+
+enableValidation();

@@ -15,9 +15,9 @@
         <section class="profile">
           <div class="profile__avatar"></div>
           <div class="profile__info">
-            <h1 class="profile__title"></h1>
+            <h1 class="profile__title">Жак Ив Кусто</h1>
             <button class="profile__button profile__button_type_edit"></button>
-            <p class="profile__subtitle"></p>
+            <p class="profile__subtitle">Исследователь океана</p>
           </div>
           <button
             class="profile__button profile__button_type_add"
@@ -34,19 +34,29 @@
     <section class="popup popup_type_editprofile">
       <div class="popup__container popup__container_form">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="form">
+        <form class="form" name="profileForm" novalidate>
           <input
             class="form__field form__field_type_author"
+            id="author-input"
             name="author"
             type="text"
             placeholder="Имя пользователя"
+            maxlength="40"
+            minlength="2"
+            required
           />
+          <span class="form__field-error author-input-error"></span>
           <input
             class="form__field form__field_type_occupation"
             name="occupation"
+            id="occupation-input"
             type="text"
+            maxlength="200"
+            minlength="2"
             placeholder="О себе"
+            required
           />
+          <span class="form__field-error occupation-input-error"></span>
           <button type="submit" class="popup__button popup__button_type_submit">
             Сохранить
           </button>
@@ -61,7 +71,7 @@
     <section class="popup popup_type_addcard">
       <div class="popup__container popup__container_form">
         <h2 class="popup__title">Новое место</h2>
-        <form class="form form_newplace">
+        <form class="form form_newplace" name="addplaceForm">
           <input
             class="form__field form__field_type_place"
             name="place"
