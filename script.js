@@ -29,18 +29,36 @@ editButton.addEventListener("click", function () {
   openPopup(popupEditProfile);
   nameInput.textContent = authorProfile.value;
   jobInput.textContent = aboutProfile.value;
-});
-
-closeButton.addEventListener("click", function () {
-  closePopup(popupEditProfile);
+  document.addEventListener("keydown", function (evt) {
+    if ((evt.key = "Escape")) {
+      closePopup(popupEditProfile);
+    }
+  });
 });
 
 addButton.addEventListener("click", function () {
   openPopup(popupNewPlace);
+  document.addEventListener("keydown", function (evt) {
+    if ((evt.key = "Escape")) {
+      closePopup(popupNewPlace);
+    }
+  });
 });
 
-closeButtonAddForm.addEventListener("click", function () {
-  closePopup(popupNewPlace);
+const overlays = document.querySelectorAll(".popup");
+overlays.forEach((overlay) => {
+  const popup = overlay.closest(".popup");
+  overlay.addEventListener("click", () => closePopup(popup));
+});
+
+// находим все крестики проекта по универсальному селектору
+const closeButtons = document.querySelectorAll(".popup__button_type_close");
+
+closeButtons.forEach((button) => {
+  // находим 1 раз ближайший к крестику попап
+  const popup = button.closest(".popup");
+  // устанавливаем обработчик закрытия на крестик
+  button.addEventListener("click", () => closePopup(popup));
 });
 
 // Обработчик «отправки» формы, хотя пока// она никуда отправляться не будет

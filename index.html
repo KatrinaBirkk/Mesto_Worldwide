@@ -31,7 +31,7 @@
       </footer>
     </div>
 
-    <section class="popup popup_type_editprofile">
+    <section class="popup popup_type_editprofile" id="overlayEditProfile">
       <div class="popup__container popup__container_form">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="form" name="profileForm" novalidate>
@@ -76,14 +76,22 @@
             class="form__field form__field_type_place"
             name="place"
             type="text"
+            maxlength="30"
+            minlength="2"
+            id="place-input"
             placeholder="Название"
+            required
           />
+          <span class="form__field-error place-input-error"></span>
           <input
             class="form__field form__field_type_link"
             name="link"
-            type="text"
+            type="url"
+            id="link-input"
             placeholder="Ссылка на картинку"
+            required
           />
+          <span class="form__field-error link-input-error"></span>
           <button type="submit" class="popup__button popup__button_type_submit">
             Создать
           </button>
