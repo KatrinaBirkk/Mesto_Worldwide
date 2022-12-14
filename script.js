@@ -30,7 +30,7 @@ editButton.addEventListener("click", function () {
   nameInput.textContent = authorProfile.value;
   jobInput.textContent = aboutProfile.value;
   document.addEventListener("keydown", function (evt) {
-    if ((evt.key = "Escape")) {
+    if (evt.key === "Escape") {
       closePopup(popupEditProfile);
     }
   });
@@ -39,16 +39,24 @@ editButton.addEventListener("click", function () {
 addButton.addEventListener("click", function () {
   openPopup(popupNewPlace);
   document.addEventListener("keydown", function (evt) {
-    if ((evt.key = "Escape")) {
+    if (evt.key === "Escape") {
       closePopup(popupNewPlace);
     }
   });
 });
 
-const overlays = document.querySelectorAll(".popup");
+/*const overlays = document.querySelectorAll(".popup");
 overlays.forEach((overlay) => {
   const popup = overlay.closest(".popup");
   overlay.addEventListener("click", () => closePopup(popup));
+}); */
+
+const overlays = document.querySelectorAll(".popup");
+overlays.forEach((overlay) => {
+  overlay.addEventListener("click", function (event) {
+    if (!overlay.contains(event.target));
+    closePopup(popup);
+  });
 });
 
 // находим все крестики проекта по универсальному селектору
@@ -109,8 +117,11 @@ const initialCards = [
 const cardsBlock = document.querySelector(".elements");
 const cardTemplate = document.querySelector("#cards").content;
 
-function create() {
-  initialCards.forEach(createCard);
+function createGallery(cardsBlock, initialCardsMassive) {
+  initialCardsMassive.forEach((element) => {
+    newCard = createCard(element);
+    cardsBlock.prepend(newCard);
+  });
 }
 
 function createCard({ name, link }) {
@@ -139,11 +150,10 @@ function createCard({ name, link }) {
       popupLabel.textContent = name;
       document.querySelector(".popup__image").alt = name;
     });
-
-  cardsBlock.prepend(cardElement);
+  return cardElement;
 }
 
-create();
+createGallery(cardsBlock, initialCards);
 
 const formNewPlace = document.querySelector(".form_newplace");
 const placeInput = document.querySelector(".form__field_type_place");
@@ -151,7 +161,8 @@ const linkInput = document.querySelector(".form__field_type_link");
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  createCard({ name: placeInput.value, link: linkInput.value });
+  newCard = createCard({ name: placeInput.value, link: linkInput.value });
+  cardsBlock.prepend(newCard);
   placeInput.value = "";
   linkInput.value = "";
   closePopup(popupNewPlace);
