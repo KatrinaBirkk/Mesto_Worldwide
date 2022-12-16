@@ -18,6 +18,11 @@ const nameInput = container.querySelector(".form__field_type_author");
 const jobInput = container.querySelector(".form__field_type_occupation");
 const formContainers = document.querySelectorAll(".popup__container");
 const overlays = document.querySelectorAll(".popup");
+const cardsBlock = document.querySelector(".elements");
+const cardTemplate = document.querySelector("#cards").content;
+const formNewPlace = document.querySelector(".form_newplace");
+const placeInput = document.querySelector(".form__field_type_place");
+const linkInput = document.querySelector(".form__field_type_link");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -148,9 +153,6 @@ const initialCards = [
   },
 ];
 
-const cardsBlock = document.querySelector(".elements");
-const cardTemplate = document.querySelector("#cards").content;
-
 function createGallery(cardsBlock, initialCardsMassive) {
   initialCardsMassive.forEach((element) => {
     newCard = createCard(element);
@@ -162,7 +164,7 @@ function createCard({ name, link }) {
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   cardElement.querySelector(".element__title").textContent = name;
   cardElement.querySelector(".element__image").src = link;
-  cardElement.querySelector(".element__image").alt = name;
+  cardElement.querySelector(".element__image").alt = `Картинка ${name}`;
 
   cardElement
     .querySelector(".element__button_type_like")
@@ -188,10 +190,6 @@ function createCard({ name, link }) {
 }
 
 createGallery(cardsBlock, initialCards);
-
-const formNewPlace = document.querySelector(".form_newplace");
-const placeInput = document.querySelector(".form__field_type_place");
-const linkInput = document.querySelector(".form__field_type_link");
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
