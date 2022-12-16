@@ -16,6 +16,8 @@ const formPlace = document.querySelector(".form_newplace"); //почему зд�
 const formProfile = document.forms.profileForm;
 const nameInput = container.querySelector(".form__field_type_author");
 const jobInput = container.querySelector(".form__field_type_occupation");
+const formContainers = document.querySelectorAll(".popup__container");
+const overlays = document.querySelectorAll(".popup");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -45,19 +47,51 @@ addButton.addEventListener("click", function () {
   });
 });
 
-/*const overlays = document.querySelectorAll(".popup");
-overlays.forEach((overlay) => {
-  const popup = overlay.closest(".popup");
-  overlay.addEventListener("click", () => closePopup(popup));
-}); */
+// const closeModalByOverlay = (event, popup) => {
+//   const target = event.target;
+//   if (
+//     target === popup
+//     // target !== insideArea &&
+//     // target !== formProfile &&
+//     // target !== nameInput &&
+//     // target !== jobInput
+//   ) {
+//     popup.classList.remove("popup_opened");
+//   }
+// };
 
-const overlays = document.querySelectorAll(".popup");
+// popupEditProfile.addEventListener("click", closeModalByOverlay);
+
 overlays.forEach((overlay) => {
-  overlay.addEventListener("click", function (event) {
-    if (!overlay.contains(event.target));
-    closePopup(popup);
+  overlay.addEventListener("click", (event) => {
+    const target = event.target;
+    if (
+      target === overlay
+      // target !== insideArea &&
+      // target !== formProfile &&
+      // target !== nameInput &&
+      // target !== jobInput
+    ) {
+      closePopup(overlay);
+    }
   });
 });
+
+/*container.addEventListener("click", closeModalByOverlay);
+
+const closeModalByOverlay2 = (event, popup) => {
+  const target = event.target;
+  if (
+    target === popupNewPlace
+    // target !== insideArea &&
+    // target !== formProfile &&
+    // target !== nameInput &&
+    // target !== jobInput
+  ) {
+    popupNewPlace.classList.remove("popup_opened");
+  }
+};
+popupNewPlace.addEventListener("click", closeModalByOverlay2); */
 
 // находим все крестики проекта по универсальному селектору
 const closeButtons = document.querySelectorAll(".popup__button_type_close");
