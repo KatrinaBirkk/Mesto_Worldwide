@@ -1,3 +1,4 @@
+import "./pages/index.css";
 import { createGallery, pictureFullSize } from "./components/cards.js";
 import { openPopup, closePopup } from "./components/utils.js";
 import { enableValidation } from "./components/validate.js";
