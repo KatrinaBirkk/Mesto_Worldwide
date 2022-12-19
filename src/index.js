@@ -1,5 +1,9 @@
 import "./pages/index.css";
-import { createGallery, pictureFullSize } from "./components/cards.js";
+import {
+  createGallery,
+  createCard,
+  pictureFullSize,
+} from "./components/cards.js";
 import { enableValidation } from "./components/validate.js";
 import {
   closePopupBySubmitAndEscape,

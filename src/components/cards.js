@@ -1,4 +1,4 @@
-import { openPopup } from "./utils.js";
+import { openPopup } from "./modal.js";
 
 const popupImage = document.querySelector(".popup__image");
 const popupLabel = document.querySelector(".popup__label");
