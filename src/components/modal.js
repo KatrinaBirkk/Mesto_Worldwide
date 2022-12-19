@@ -6,14 +6,11 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
-function closePopupBySubmitAndEscape(button, popup) {
-  button.addEventListener("click", function () {
-    openPopup(popup);
-    document.addEventListener("keydown", function (evt) {
-      if (evt.key === "Escape") {
-        closePopup(popup);
-      }
-    });
+function closePopupByEscapeButton(popup) {
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      closePopup(popup);
+    }
   });
 }
 
@@ -29,8 +26,8 @@ function closePopupByClickToOverlay(targetToClick) {
 }
 
 export {
-  closePopupBySubmitAndEscape,
   closePopupByClickToOverlay,
+  closePopupByEscapeButton,
   openPopup,
   closePopup,
 };

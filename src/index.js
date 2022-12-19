@@ -6,8 +6,8 @@ import {
 } from "./components/cards.js";
 import { enableValidation } from "./components/validate.js";
 import {
-  closePopupBySubmitAndEscape,
   closePopupByClickToOverlay,
+  closePopupByEscapeButton,
   openPopup,
   closePopup,
 } from "./components/modal.js";
@@ -54,17 +54,18 @@ function handleAddFormSubmit(evt) {
 
 editButton.addEventListener("click", function () {
   openPopup(popupEditProfile);
-  nameInput.textContent = authorProfile.value;
-  jobInput.textContent = aboutProfile.value;
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      closePopup(popupEditProfile);
-    }
-  });
+  nameInput.value = authorProfile.textContent;
+  jobInput.value = aboutProfile.textContent;
 });
 
-closePopupBySubmitAndEscape(addButton, popupNewPlace);
+addButton.addEventListener("click", function () {
+  openPopup(popupNewPlace);
+});
+
 closePopupByClickToOverlay(overlays);
+closePopupByEscapeButton(pictureFullSize);
+closePopupByEscapeButton(popupNewPlace);
+closePopupByEscapeButton(popupEditProfile);
 
 // находим все крестики проекта по универсальному селектору
 const closeButtons = document.querySelectorAll(".popup__button_type_close");
@@ -84,11 +85,11 @@ createGallery(cardsBlock, initialCards);
 
 formNewPlace.addEventListener("submit", handleAddFormSubmit);
 
-document
-  .querySelector("#close_fullpicture")
-  .addEventListener("click", function () {
-    closePopup(pictureFullSize);
-  });
+// document
+//   .querySelector("#close_fullpicture")
+//   .addEventListener("click", function () {
+//     closePopup(pictureFullSize);
+//   });
 
 const settings = {
   formSelector: ".form",
