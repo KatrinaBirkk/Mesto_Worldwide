@@ -1,3 +1,4 @@
 .element__button_type_delete_none {
   display: none;
+  cursor: pointer;
 }

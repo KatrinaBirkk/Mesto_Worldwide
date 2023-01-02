@@ -10,6 +10,7 @@
   height: 24px;
   margin: 0 0 8px 0;
   padding: 0;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 592px) {

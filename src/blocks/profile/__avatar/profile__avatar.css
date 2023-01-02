@@ -6,6 +6,7 @@
   height: 120px;
 }
 
-.profile__avatar:hover {
-  opacity: 0.5;
+.profile__avatar:hover .profile__avatar_cover {
+  opacity: 1;
+  transition: 0.4s ease;
 }

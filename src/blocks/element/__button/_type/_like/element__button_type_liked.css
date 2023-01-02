@@ -1,3 +1,4 @@
 .element__button_type_liked {
   background-image: url("../../../../../images/Heart_black.svg");
+  cursor: pointer;
 }
