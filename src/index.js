@@ -85,6 +85,7 @@ function handleAddFormSubmit(evt) {
   closePopup(popupNewPlace);
   console.log(submitButton);
   submitButton.classList.add("button_inactive");
+  submitButton.setAttribute("disabled", true);
   evt.target.reset();
   console.log(submitButton);
 }
