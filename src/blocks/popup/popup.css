@@ -16,6 +16,6 @@
   .popup {
     flex-direction: column;
     flex-flow: column-reverse;
-    justify-content: start;
+    justify-content: center;
   }
 }
