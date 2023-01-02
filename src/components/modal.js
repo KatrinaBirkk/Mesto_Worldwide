@@ -1,9 +1,15 @@
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  closePopupByEscapeButton(popup);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      closePopup(popup);
+    }
+  });
 }
 
 function closePopupByEscapeButton(popup) {
