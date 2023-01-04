@@ -162,12 +162,6 @@ addCardsFromAPI()
 
 formNewPlace.addEventListener("submit", handleAddFormSubmit);
 
-// document
-//   .querySelector("#close_fullpicture")
-//   .addEventListener("click", function () {
-//     closePopup(pictureFullSize);
-//   });
-
 const settings = {
   formSelector: ".form",
   inputSelector: ".form__field",

@@ -16,14 +16,6 @@ function closePopup(popup) {
   });
 }
 
-// function closePopupByEscapeButton(popup) {
-//   document.addEventListener("keydown", function (evt) {
-//     if (evt.key === "Escape") {
-//       popup.classList.remove("popup_opened");
-//     }
-//   });
-// }
-
 function closePopupByClickToOverlay(targetToClick) {
   targetToClick.forEach((overlay) => {
     overlay.addEventListener("click", (event) => {
@@ -35,9 +27,4 @@ function closePopupByClickToOverlay(targetToClick) {
   });
 }
 
-export {
-  closePopupByClickToOverlay,
-  // closePopupByEscapeButton,
-  openPopup,
-  closePopup,
-};
+export { closePopupByClickToOverlay, openPopup, closePopup };

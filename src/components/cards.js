@@ -82,9 +82,6 @@ function createCard({ name, link, likes, owner, _id }) {
         .catch((err) => {
           console.log(err);
         });
-      // .finally((res) => {
-      //   cardElement.remove();
-      // });
     });
 
   cardElement
