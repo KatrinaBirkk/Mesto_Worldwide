@@ -37,14 +37,15 @@ const popupChangeProfilePhoto = document.querySelector(
 const submitButton = document.querySelector(".submit_picture");
 const changeAvatarForm = document.querySelector(".form_profilePhoto");
 const avatarInput = document.querySelector(".form__field_avatarInput");
-const buttonSubmit = document.querySelectorAll(".popup__button_type_submit");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+  const buttonProfileSubmit = document.querySelector("#saveProfileInfoButton");
   const buttonText = document.querySelector(
     "#saveProfileInfoButton"
   ).textContent;
-  renderLoading(true, buttonText);
+  console.log(buttonText);
+  renderLoading(true, buttonProfileSubmit);
   sendProfileData(nameInput.value, jobInput.value)
     .then((res) => {
       authorProfile.textContent = nameInput.value;
@@ -56,7 +57,7 @@ function handleProfileFormSubmit(evt) {
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonText);
+      renderLoading(false, buttonProfileSubmit, buttonText);
     });
 }
 
@@ -76,8 +77,9 @@ readProfileInfo()
 //Изменить изображение
 function handleChangeAvatar(evt) {
   evt.preventDefault();
+  const buttonProfileSubmit = document.querySelector("#changeAvatar");
   const buttonText = document.querySelector("#changeAvatar").textContent;
-  renderLoading(true, buttonText);
+  renderLoading(true, buttonProfileSubmit);
   sendNewAvatar(avatarInput.value)
     .then((res) => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
@@ -88,7 +90,7 @@ function handleChangeAvatar(evt) {
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonText);
+      renderLoading(false, buttonProfileSubmit, buttonText);
     });
   evt.target.reset();
 }
@@ -97,8 +99,9 @@ changeAvatarForm.addEventListener("submit", handleChangeAvatar);
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
+  const buttonProfileSubmit = document.querySelector(".submit_picture");
   const buttonText = document.querySelector(".submit_picture").textContent;
-  renderLoading(true, buttonText);
+  renderLoading(true, buttonProfileSubmit);
   sendNewCard(placeInput.value, linkInput.value)
     .then((res) => {
       const newCard = createCard({
@@ -115,7 +118,7 @@ function handleAddFormSubmit(evt) {
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonText);
+      renderLoading(false, buttonProfileSubmit, buttonText);
     });
   submitButton.classList.add("button_inactive");
   submitButton.setAttribute("disabled", true);
@@ -171,15 +174,11 @@ const settings = {
   errorClass: "form__field-error_active",
 };
 
-function renderLoading(isLoading, buttonText) {
+function renderLoading(isLoading, buttonSubmit, buttonText) {
   if (isLoading) {
-    buttonSubmit.forEach((element) => {
-      element.textContent = "Loading...";
-    });
+    buttonSubmit.textContent = "Loading...";
   } else {
-    buttonSubmit.forEach((element) => {
-      element.textContent = buttonText;
-    });
+    buttonSubmit.textContent = buttonText;
   }
 }
 
