@@ -1,135 +1,114 @@
-import {
-  authorProfile,
-  aboutProfile,
-  profileAvatar,
-  cardsBlock,
-} from "../index.js";
-import { createGallery } from "./cards";
-
-let MyId = 5;
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-3",
+  headers: {
+    authorization: "b36172dc-4c92-418a-a285-4baac88e4766",
+    "Content-Type": "application/json",
+  },
+};
 
 function readProfileInfo() {
-  fetch("https://nomoreparties.co/v1/wbf-cohort-3/users/me", {
-    headers: {
-      authorization: "b36172dc-4c92-418a-a285-4baac88e4766",
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      authorProfile.textContent = res.name;
-      aboutProfile.textContent = res.about;
-      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-      MyId = res._id;
-      console.log(MyId);
-    });
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function sendProfileData(url, token, name, occupation) {
-  fetch(url, {
+function sendProfileData(name, occupation) {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       about: occupation,
     }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function sendNewCard(url, token, name, link) {
-  fetch(url, {
+function sendNewCard(name, link) {
+  return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       link: link,
     }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function sendNewAvatar(url, token, avatar) {
-  fetch(url, {
+function sendNewAvatar(avatar) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       avatar,
     }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function deleteCard(url, token) {
-  fetch(url, {
+function deleteCard(_id) {
+  return fetch(`${config.baseUrl}/cards/${_id}`, {
     method: "DELETE",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function addCardsFromAPI(url, auth) {
-  fetch(url, {
-    headers: {
-      authorization: auth,
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      createGallery(cardsBlock, res);
-      console.log(res);
-    });
+function addCardsFromAPI() {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function unLike(url, token) {
-  fetch(url, {
+function unLike(_id) {
+  return fetch(`${config.baseUrl}/cards/likes/${_id}`, {
     method: "DELETE",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
-function putLike(url, token) {
-  fetch(url, {
+function putLike(_id) {
+  return fetch(`${config.baseUrl}/cards/likes/${_id}`, {
     method: "PUT",
-    headers: {
-      authorization: token,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export {
@@ -138,7 +117,6 @@ export {
   sendNewCard,
   addCardsFromAPI,
   sendNewAvatar,
-  MyId,
   deleteCard,
   unLike,
   putLike,

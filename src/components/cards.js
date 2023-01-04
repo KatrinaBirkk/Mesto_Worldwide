@@ -1,5 +1,6 @@
 import { openPopup } from "./modal.js";
-import { MyId, deleteCard, unLike, putLike } from "./api.js";
+import { deleteCard, unLike, putLike } from "./api.js";
+import { MyId } from "../index.js";
 
 const popupImage = document.querySelector(".popup__image");
 const popupLabel = document.querySelector(".popup__label");
@@ -48,30 +49,42 @@ function createCard({ name, link, likes, owner, _id }) {
           .querySelector(".element__button_type_like")
           .classList.contains("element__button_type_liked")
       ) {
-        evt.target.classList.remove("element__button_type_liked");
-        cardElement.querySelector(".element__counter").textContent--;
-        unLike(
-          `https://nomoreparties.co/v1/wbf-cohort-3/cards/likes/${_id}`,
-          "b36172dc-4c92-418a-a285-4baac88e4766"
-        );
+        unLike(_id)
+          .then((res) => {
+            evt.target.classList.remove("element__button_type_liked");
+            cardElement.querySelector(".element__counter").textContent =
+              res.likes.length;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
-        evt.target.classList.add("element__button_type_liked");
-        cardElement.querySelector(".element__counter").textContent++;
-        putLike(
-          `https://nomoreparties.co/v1/wbf-cohort-3/cards/likes/${_id}`,
-          "b36172dc-4c92-418a-a285-4baac88e4766"
-        );
+        putLike(_id).then((res) => {
+          evt.target.classList.add("element__button_type_liked");
+          cardElement.querySelector(".element__counter").textContent =
+            res.likes.length;
+        });
       }
     });
 
   cardElement
     .querySelector(".element__button_type_delete")
     .addEventListener("click", function () {
-      cardElement.remove();
-      deleteCard(
-        `https://nomoreparties.co/v1/wbf-cohort-3/cards/${_id}`,
-        "b36172dc-4c92-418a-a285-4baac88e4766"
-      );
+      deleteCard(_id)
+        .then((res) => {
+          if (ownerId === MyId) {
+            cardElement
+              .querySelector(".element__button_type_delete")
+              .classList.remove("element__button_type_delete_none");
+            cardElement.remove();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // .finally((res) => {
+      //   cardElement.remove();
+      // });
     });
 
   cardElement

@@ -1,5 +1,5 @@
 import "./pages/index.css";
-import { createCard } from "./components/cards.js";
+import { createCard, createGallery } from "./components/cards.js";
 import { enableValidation } from "./components/validate.js";
 import {
   closePopupByClickToOverlay,
@@ -12,10 +12,9 @@ import {
   sendNewCard,
   addCardsFromAPI,
   sendNewAvatar,
-  MyId,
 } from "./components/api.js";
 
-export { authorProfile, aboutProfile, profileAvatar, cardsBlock };
+export { authorProfile, aboutProfile, profileAvatar, cardsBlock, MyId };
 
 const editButton = document.querySelector(".profile__button_type_edit");
 const formNewPlace = document.querySelector(".form_newplace");
@@ -41,28 +40,37 @@ const avatarInput = document.querySelector(".form__field_avatarInput");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  authorProfile.textContent = nameInput.value;
-  aboutProfile.textContent = jobInput.value;
-  sendProfileData(
-    "https://nomoreparties.co/v1/wbf-cohort-3/users/me",
-    "b36172dc-4c92-418a-a285-4baac88e4766",
-    nameInput.value,
-    jobInput.value
-  );
-  closePopup(popupEditProfile);
+  sendProfileData(nameInput.value, jobInput.value)
+    .then((res) => {
+      authorProfile.textContent = nameInput.value;
+      aboutProfile.textContent = jobInput.value;
+      closePopup(popupEditProfile);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
-readProfileInfo();
+let MyId = 0;
+
+readProfileInfo()
+  .then((res) => {
+    authorProfile.textContent = res.name;
+    aboutProfile.textContent = res.about;
+    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    MyId = res._id;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Изменить изображение
 function handleChangeAvatar(evt) {
   evt.preventDefault();
-  sendNewAvatar(
-    "https://nomoreparties.co/v1/wbf-cohort-3/users/me/avatar",
-    "b36172dc-4c92-418a-a285-4baac88e4766",
-    avatarInput.value
-  );
-  closePopup(popupChangeProfilePhoto);
+  sendNewAvatar(avatarInput.value).then((res) => {
+    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    closePopup(popupChangeProfilePhoto);
+  });
   evt.target.reset();
 }
 
@@ -70,24 +78,24 @@ changeAvatarForm.addEventListener("submit", handleChangeAvatar);
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  const newCard = createCard({
-    name: placeInput.value,
-    link: linkInput.value,
-    owner: { _id: MyId },
-  });
-  cardsBlock.prepend(newCard);
-  sendNewCard(
-    "https://nomoreparties.co/v1/wbf-cohort-3/cards",
-    "b36172dc-4c92-418a-a285-4baac88e4766",
-    placeInput.value,
-    linkInput.value
-  );
-  closePopup(popupNewPlace);
-  console.log(submitButton);
+  sendNewCard(placeInput.value, linkInput.value)
+    .then((res) => {
+      const newCard = createCard({
+        name: res.name,
+        link: res.link,
+        owner: { _id: res.owner._id },
+        _id: res._id,
+      });
+      cardsBlock.append(newCard);
+      closePopup(popupNewPlace);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   submitButton.classList.add("button_inactive");
   submitButton.setAttribute("disabled", true);
   evt.target.reset();
-  console.log(submitButton);
 }
 
 editButton.addEventListener("click", function () {
@@ -120,10 +128,13 @@ closeButtons.forEach((button) => {
 // он будет следить за событием “submit” - «отправка»
 formProfile.addEventListener("submit", handleProfileFormSubmit);
 
-addCardsFromAPI(
-  "https://nomoreparties.co/v1/wbf-cohort-3/cards",
-  "b36172dc-4c92-418a-a285-4baac88e4766"
-);
+addCardsFromAPI()
+  .then((res) => {
+    createGallery(cardsBlock, res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 formNewPlace.addEventListener("submit", handleAddFormSubmit);
 
