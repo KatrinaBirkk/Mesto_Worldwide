@@ -1,24 +1,28 @@
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  closePopupByEscapeButton(popup);
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      popup.classList.remove("popup_opened");
+    }
+  });
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", function (evt) {
     if (evt.key === "Escape") {
-      closePopup(popup);
+      popup.classList.remove("popup_opened");
     }
   });
 }
 
-function closePopupByEscapeButton(popup) {
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      closePopup(popup);
-    }
-  });
-}
+// function closePopupByEscapeButton(popup) {
+//   document.addEventListener("keydown", function (evt) {
+//     if (evt.key === "Escape") {
+//       popup.classList.remove("popup_opened");
+//     }
+//   });
+// }
 
 function closePopupByClickToOverlay(targetToClick) {
   targetToClick.forEach((overlay) => {
@@ -33,7 +37,7 @@ function closePopupByClickToOverlay(targetToClick) {
 
 export {
   closePopupByClickToOverlay,
-  closePopupByEscapeButton,
+  // closePopupByEscapeButton,
   openPopup,
   closePopup,
 };

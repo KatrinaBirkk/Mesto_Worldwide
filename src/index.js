@@ -37,9 +37,14 @@ const popupChangeProfilePhoto = document.querySelector(
 const submitButton = document.querySelector(".submit_picture");
 const changeAvatarForm = document.querySelector(".form_profilePhoto");
 const avatarInput = document.querySelector(".form__field_avatarInput");
+const buttonSubmit = document.querySelectorAll(".popup__button_type_submit");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+  const buttonText = document.querySelector(
+    "#saveProfileInfoButton"
+  ).textContent;
+  renderLoading(true, buttonText);
   sendProfileData(nameInput.value, jobInput.value)
     .then((res) => {
       authorProfile.textContent = nameInput.value;
@@ -48,6 +53,10 @@ function handleProfileFormSubmit(evt) {
     })
     .catch((err) => {
       console.log(err);
+      renderError(`Error ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, buttonText);
     });
 }
 
@@ -67,10 +76,20 @@ readProfileInfo()
 //Изменить изображение
 function handleChangeAvatar(evt) {
   evt.preventDefault();
-  sendNewAvatar(avatarInput.value).then((res) => {
-    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-    closePopup(popupChangeProfilePhoto);
-  });
+  const buttonText = document.querySelector("#changeAvatar").textContent;
+  renderLoading(true, buttonText);
+  sendNewAvatar(avatarInput.value)
+    .then((res) => {
+      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+      closePopup(popupChangeProfilePhoto);
+    })
+    .catch((err) => {
+      console.log(err);
+      renderError(`Error ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, buttonText);
+    });
   evt.target.reset();
 }
 
@@ -78,6 +97,8 @@ changeAvatarForm.addEventListener("submit", handleChangeAvatar);
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
+  const buttonText = document.querySelector(".submit_picture").textContent;
+  renderLoading(true, buttonText);
   sendNewCard(placeInput.value, linkInput.value)
     .then((res) => {
       const newCard = createCard({
@@ -91,8 +112,11 @@ function handleAddFormSubmit(evt) {
     })
     .catch((err) => {
       console.log(err);
+      renderError(`Error ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, buttonText);
     });
-
   submitButton.classList.add("button_inactive");
   submitButton.setAttribute("disabled", true);
   evt.target.reset();
@@ -152,5 +176,21 @@ const settings = {
   inputErrorClass: "form__field_type_error",
   errorClass: "form__field-error_active",
 };
+
+function renderLoading(isLoading, buttonText) {
+  if (isLoading) {
+    buttonSubmit.forEach((element) => {
+      element.textContent = "Loading...";
+    });
+  } else {
+    buttonSubmit.forEach((element) => {
+      element.textContent = buttonText;
+    });
+  }
+}
+
+function renderError(err) {
+  buttonSubmit.textContent = err;
+}
 
 enableValidation(settings);
