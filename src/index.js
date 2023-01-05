@@ -8,6 +8,7 @@ import {
 } from "./components/modal.js";
 import {
   getUserInfo,
+  sendProfileData,
   sendNewCard,
   getCards,
   sendNewAvatar,

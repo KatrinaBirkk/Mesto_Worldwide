@@ -75,6 +75,7 @@ function putLike(_id) {
 
 export {
   getUserInfo,
+  sendProfileData,
   sendNewCard,
   getCards,
   sendNewAvatar,
