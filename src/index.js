@@ -65,7 +65,6 @@ Promise.all([getUserInfo(), getCards()])
   // тут деструктурируете ответ от сервера, чтобы было понятнее, что пришло
   .then(([userData, cards]) => {
     // тут установка данных пользователя
-    console.log(userData, cards);
     authorProfile.textContent = userData.name;
     aboutProfile.textContent = userData.about;
     profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
