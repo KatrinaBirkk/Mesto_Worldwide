@@ -16,24 +16,30 @@ function createGallery(cardsGallery, arrayOfCardsInfo) {
 
 function createCard({ name, link, likes, owner, _id }) {
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
-  cardElement.querySelector(".element__title").textContent = name;
-  cardElement.querySelector(".element__image").src = link;
-  cardElement.querySelector(".element__image").alt = `Картинка ${name}`;
+  const templatePicture = cardElement.querySelector(".element__image");
+  const templatePictureTitle = cardElement.querySelector(".element__title");
+  templatePictureTitle.textContent = name;
+  templatePicture.src = link;
+  templatePicture.alt = `Картинка ${name}`;
 
-  let ownerId = owner._id;
+  const ownerId = owner._id;
+  const templateDeleteButton = cardElement.querySelector(
+    ".element__button_type_delete"
+  );
+  const templateLikeButton = cardElement.querySelector(
+    ".element__button_type_like"
+  );
+  const templateLikeCounter = cardElement.querySelector(".element__counter");
+
   if (ownerId === MyId) {
-    cardElement
-      .querySelector(".element__button_type_delete")
-      .classList.remove("element__button_type_delete_none");
+    templateDeleteButton.classList.remove("element__button_type_delete_none");
   }
   if (likes === undefined) {
     likes = "0";
   } else {
     likes.forEach((element) => {
       if (MyId === element._id) {
-        cardElement
-          .querySelector(".element__button_type_like")
-          .classList.add("element__button_type_liked");
+        templateLikeButton.classList.add("element__button_type_liked");
       }
     });
 
@@ -41,57 +47,49 @@ function createCard({ name, link, likes, owner, _id }) {
   }
   cardElement.querySelector(".element__counter").textContent = likes;
 
-  cardElement
-    .querySelector(".element__button_type_like")
-    .addEventListener("click", function (evt) {
-      if (
-        cardElement
-          .querySelector(".element__button_type_like")
-          .classList.contains("element__button_type_liked")
-      ) {
-        unLike(_id)
-          .then((res) => {
-            evt.target.classList.remove("element__button_type_liked");
-            cardElement.querySelector(".element__counter").textContent =
-              res.likes.length;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        putLike(_id).then((res) => {
-          evt.target.classList.add("element__button_type_liked");
-          cardElement.querySelector(".element__counter").textContent =
-            res.likes.length;
-        });
-      }
-    });
-
-  cardElement
-    .querySelector(".element__button_type_delete")
-    .addEventListener("click", function () {
-      deleteCard(_id)
+  templateLikeButton.addEventListener("click", function (evt) {
+    if (templateLikeButton.classList.contains("element__button_type_liked")) {
+      unLike(_id)
         .then((res) => {
-          if (ownerId === MyId) {
-            cardElement
-              .querySelector(".element__button_type_delete")
-              .classList.remove("element__button_type_delete_none");
-            cardElement.remove();
-          }
+          evt.target.classList.remove("element__button_type_liked");
+          templateLikeCounter.textContent = res.likes.length;
         })
         .catch((err) => {
           console.log(err);
         });
-    });
+    } else {
+      putLike(_id)
+        .then((res) => {
+          evt.target.classList.add("element__button_type_liked");
+          templateLikeCounter.textContent = res.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
 
-  cardElement
-    .querySelector(".element__image")
-    .addEventListener("click", function () {
-      openPopup(pictureFullSize);
-      popupImage.src = link;
-      popupLabel.textContent = name;
-      document.querySelector(".popup__image").alt = name;
-    });
+  templateDeleteButton.addEventListener("click", function () {
+    deleteCard(_id)
+      .then((res) => {
+        if (ownerId === MyId) {
+          templateDeleteButton.classList.remove(
+            "element__button_type_delete_none"
+          );
+          cardElement.remove();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  templatePicture.addEventListener("click", function () {
+    openPopup(pictureFullSize);
+    popupImage.src = link;
+    popupLabel.textContent = name;
+    popupImage.alt = name;
+  });
   return cardElement;
 }
 

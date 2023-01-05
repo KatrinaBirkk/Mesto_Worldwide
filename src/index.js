@@ -7,12 +7,13 @@ import {
   closePopup,
 } from "./components/modal.js";
 import {
-  readProfileInfo,
-  sendProfileData,
+  getUserInfo,
   sendNewCard,
-  addCardsFromAPI,
+  getCards,
   sendNewAvatar,
 } from "./components/api.js";
+
+import { renderLoading, renderError } from "./components/utils.js";
 
 export { authorProfile, aboutProfile, profileAvatar, cardsBlock, MyId };
 
@@ -38,14 +39,13 @@ const submitButton = document.querySelector(".submit_picture");
 const changeAvatarForm = document.querySelector(".form_profilePhoto");
 const avatarInput = document.querySelector(".form__field_avatarInput");
 
+let MyId = 0;
+
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  const buttonProfileSubmit = document.querySelector("#saveProfileInfoButton");
-  const buttonText = document.querySelector(
-    "#saveProfileInfoButton"
-  ).textContent;
-  console.log(buttonText);
-  renderLoading(true, buttonProfileSubmit);
+  const buttonFormSubmit = evt.submitter;
+  const buttonText = buttonFormSubmit.textContent;
+  renderLoading(true, buttonFormSubmit);
   sendProfileData(nameInput.value, jobInput.value)
     .then((res) => {
       authorProfile.textContent = nameInput.value;
@@ -57,18 +57,21 @@ function handleProfileFormSubmit(evt) {
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonProfileSubmit, buttonText);
+      renderLoading(false, buttonFormSubmit, buttonText);
     });
 }
 
-let MyId = 0;
-
-readProfileInfo()
-  .then((res) => {
-    authorProfile.textContent = res.name;
-    aboutProfile.textContent = res.about;
-    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-    MyId = res._id;
+Promise.all([getUserInfo(), getCards()])
+  // тут деструктурируете ответ от сервера, чтобы было понятнее, что пришло
+  .then(([userData, cards]) => {
+    // тут установка данных пользователя
+    console.log(userData, cards);
+    authorProfile.textContent = userData.name;
+    aboutProfile.textContent = userData.about;
+    profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
+    MyId = userData._id;
+    // и тут отрисовка карточек
+    createGallery(cardsBlock, cards);
   })
   .catch((err) => {
     console.log(err);
@@ -77,31 +80,31 @@ readProfileInfo()
 //Изменить изображение
 function handleChangeAvatar(evt) {
   evt.preventDefault();
-  const buttonProfileSubmit = document.querySelector("#changeAvatar");
-  const buttonText = document.querySelector("#changeAvatar").textContent;
-  renderLoading(true, buttonProfileSubmit);
+  const buttonFormSubmit = evt.submitter;
+  const buttonText = buttonFormSubmit.textContent;
+  renderLoading(true, buttonFormSubmit);
   sendNewAvatar(avatarInput.value)
     .then((res) => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
       closePopup(popupChangeProfilePhoto);
+      evt.target.reset();
     })
     .catch((err) => {
       console.log(err);
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonProfileSubmit, buttonText);
+      renderLoading(false, buttonFormSubmit, buttonText);
     });
-  evt.target.reset();
 }
 
 changeAvatarForm.addEventListener("submit", handleChangeAvatar);
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  const buttonProfileSubmit = document.querySelector(".submit_picture");
-  const buttonText = document.querySelector(".submit_picture").textContent;
-  renderLoading(true, buttonProfileSubmit);
+  const buttonFormSubmit = evt.submitter;
+  const buttonText = buttonFormSubmit.textContent;
+  renderLoading(true, buttonFormSubmit);
   sendNewCard(placeInput.value, linkInput.value)
     .then((res) => {
       const newCard = createCard({
@@ -110,19 +113,19 @@ function handleAddFormSubmit(evt) {
         owner: { _id: res.owner._id },
         _id: res._id,
       });
-      cardsBlock.append(newCard);
+      cardsBlock.prepend(newCard);
       closePopup(popupNewPlace);
+      // submitButton.classList.add("button_inactive");
+      // submitButton.setAttribute("disabled", true);
+      evt.target.reset();
     })
     .catch((err) => {
       console.log(err);
       renderError(`Error ${err}`);
     })
     .finally(() => {
-      renderLoading(false, buttonProfileSubmit, buttonText);
+      renderLoading(false, buttonFormSubmit, buttonText);
     });
-  submitButton.classList.add("button_inactive");
-  submitButton.setAttribute("disabled", true);
-  evt.target.reset();
 }
 
 editButton.addEventListener("click", function () {
@@ -155,14 +158,6 @@ closeButtons.forEach((button) => {
 // он будет следить за событием “submit” - «отправка»
 formProfile.addEventListener("submit", handleProfileFormSubmit);
 
-addCardsFromAPI()
-  .then((res) => {
-    createGallery(cardsBlock, res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 formNewPlace.addEventListener("submit", handleAddFormSubmit);
 
 const settings = {
@@ -173,17 +168,5 @@ const settings = {
   inputErrorClass: "form__field_type_error",
   errorClass: "form__field-error_active",
 };
-
-function renderLoading(isLoading, buttonSubmit, buttonText) {
-  if (isLoading) {
-    buttonSubmit.textContent = "Loading...";
-  } else {
-    buttonSubmit.textContent = buttonText;
-  }
-}
-
-function renderError(err) {
-  buttonSubmit.textContent = err;
-}
 
 enableValidation(settings);
